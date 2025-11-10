@@ -1,10 +1,10 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
+function MainContent() {
+  return (
+    <main style={{ backgroundColor: '#e8f4ff', padding: '20px', minHeight: '200px' }}>
+      <h2>Welcome to My Website</h2>
+      <p>Here you’ll find information about my favorite cities and travel stories.</p>
+    </main>
+  );
+}
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+export default MainContent;
