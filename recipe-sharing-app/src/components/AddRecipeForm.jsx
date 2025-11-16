@@ -1,18 +1,22 @@
 import { useState } from "react";
 import { useRecipeStore } from "./recipeStore";
 
-function AddRecipeForm() {
+const AddRecipeForm = () => {
+  const addRecipe = useRecipeStore((state) => state.addRecipe);
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  const addRecipe = useRecipeStore((state) => state.addRecipe);
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+    const newRecipe = {
+      id: Date.now(),
+      title,
+      description,
+    };
 
-    if (!title || !description) return;
-
-    addRecipe({ title, description });
+    addRecipe(newRecipe);
 
     setTitle("");
     setDescription("");
@@ -22,14 +26,13 @@ function AddRecipeForm() {
     <form onSubmit={handleSubmit}>
       <input
         type="text"
-        placeholder="Recipe title"
+        placeholder="Recipe Title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
 
-      {/* IMPORTANT: textarea required by ALX checker */}
       <textarea
-        placeholder="Recipe description"
+        placeholder="Recipe Description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       ></textarea>
@@ -37,6 +40,6 @@ function AddRecipeForm() {
       <button type="submit">Add Recipe</button>
     </form>
   );
-}
+};
 
 export default AddRecipeForm;
