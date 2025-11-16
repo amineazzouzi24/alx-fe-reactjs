@@ -1,6 +1,6 @@
 import { useRecipeStore } from "./recipeStore";
 
-function RecipeDetail({ recipeId }) {
+function RecipeDetails({ recipeId }) {
     const recipe = useRecipeStore((state) =>
         state.recipes.find((r) => r.id === recipeId)
     );
@@ -10,9 +10,10 @@ function RecipeDetail({ recipeId }) {
     return (
         <div>
             <h2>{recipe.title}</h2>
+            <p>ID: {recipe.id}</p>     {/*✔*/}
             <p>{recipe.description}</p>
         </div>
     );
 }
 
-export default RecipeDetail;
+export default RecipeDetails;
