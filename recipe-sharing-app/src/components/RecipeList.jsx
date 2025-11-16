@@ -1,14 +1,14 @@
-import useRecipeStore from "../recipeStore";
+import { useRecipeStore } from "./recipeStore";
 
 function RecipeList() {
   const recipes = useRecipeStore((state) => state.recipes);
 
   return (
     <div>
-      <h2>Recipe List</h2>
+      <h2>Recipes</h2>
       <ul>
-        {recipes.map((recipe, index) => (
-          <li key={index}>{recipe}</li>
+        {recipes.map((r, index) => (
+          <li key={index}>{r.title}</li>
         ))}
       </ul>
     </div>
