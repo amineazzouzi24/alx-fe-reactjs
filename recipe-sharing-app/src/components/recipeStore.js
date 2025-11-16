@@ -3,14 +3,10 @@ import { create } from "zustand";
 const useRecipeStore = create((set) => ({
   recipes: [],
 
-  // Search term 
+  // ========= SEARCH (previous task) =========
   searchTerm: "",
   setSearchTerm: (term) => set({ searchTerm: term }),
-
-  // Filtered results 
   filteredRecipes: [],
-
-  // Filter action 
   filterRecipes: () =>
     set((state) => ({
       filteredRecipes: state.recipes.filter((recipe) =>
@@ -18,15 +14,16 @@ const useRecipeStore = create((set) => ({
       ),
     })),
 
-  // Existing actions
+  // ========= CRUD =========
   setRecipes: (recipes) => set({ recipes }),
+
   addRecipe: (recipe) =>
     set((state) => ({ recipes: [...state.recipes, recipe] })),
 
   updateRecipe: (updatedRecipe) =>
     set((state) => ({
-      recipes: state.recipes.map((r) =>
-        r.id === updatedRecipe.id ? updatedRecipe : r
+      recipes: state.recipes.map((recipe) =>
+        recipe.id === updatedRecipe.id ? updatedRecipe : recipe
       ),
     })),
 
@@ -34,6 +31,32 @@ const useRecipeStore = create((set) => ({
     set((state) => ({
       recipes: state.recipes.filter((recipe) => recipe.id !== id),
     })),
+
+  // ========= FAVORITES =========
+  favorites: [],
+
+  addFavorite: (recipeId) =>
+    set((state) => ({
+      favorites: [...state.favorites, recipeId],
+    })),
+
+  removeFavorite: (recipeId) =>
+    set((state) => ({
+      favorites: state.favorites.filter((id) => id !== recipeId),
+    })),
+
+  // ========= RECOMMENDATIONS =========
+  recommendations: [],
+
+  generateRecommendations: () =>
+    set((state) => {
+      // Simple mock recommendation engine
+      const recommended = state.recipes.filter(
+        (recipe) =>
+          state.favorites.includes(recipe.id) && Math.random() > 0.3
+      );
+      return { recommendations: recommended };
+    }),
 }));
 
 export default useRecipeStore;
