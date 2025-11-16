@@ -3,12 +3,15 @@ import AddRecipeForm from "./components/AddRecipeForm";
 import RecipeList from "./components/RecipeList";
 import RecipeDetails from "./components/RecipeDetails";
 import EditRecipeForm from "./components/EditRecipeForm";
+import SearchBar from "./components/SearchBar";
 
 function App() {
   return (
     <Router>
       <div className="App">
         <h1>Recipe App</h1>
+
+        <SearchBar />
 
         <Routes>
           <Route path="/" element={<RecipeList />} />
