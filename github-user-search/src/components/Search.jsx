@@ -17,12 +17,10 @@ const Search = () => {
 
     try {
       let data = [];
-      // إذا فقط اسم المستخدم -> البحث الأساسي
       if (username && !location && !minRepos) {
         const user = await fetchUserData(username);
-        data = [user]; // نجعلها array ليتوافق مع map
+        data = [user]; //array map
       } else {
-        // البحث المتقدم
         data = await fetchUsersAdvanced({ username, location, minRepos });
       }
       setUserData(data);
