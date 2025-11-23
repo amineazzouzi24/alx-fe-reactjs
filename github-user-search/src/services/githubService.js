@@ -1,21 +1,13 @@
-export async function getGithubUser(username) {
-  const token = import.meta.env.VITE_GITHUB_TOKEN;
+import axios from "axios";
 
+const BASE_URL = "https://api.github.com/users";
+
+export const fetchUserData = async (username) => {
   try {
-    const response = await fetch(`https://api.github.com/users/${username}`, {
-      headers: {
-        Authorization: `token ${token}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error("User not found");
-    }
-
-    const data = await response.json();
-    return data;
-
+    const response = await axios.get(`${BASE_URL}/${username}`);
+    return response.data; // return user data
   } catch (error) {
-    throw error;
+    console.error("Error fetching GitHub user:", error);
+    throw error; // let caller handle it
   }
-}
+};
