@@ -1,23 +1,51 @@
 import React, { useState } from "react";
+import { fetchUserData } from "../services/githubService";
 
-const Search = ({ onSearch }) => {
+const Search = () => {
   const [query, setQuery] = useState("");
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // prevent page reload
-    onSearch(query); // call a prop function to do the search
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    setUser(null);
+
+    try {
+      const data = await fetchUserData(query);
+      setUser(data);
+    } catch (err) {
+      setError("Looks like we can't find the user");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search GitHub users..."
-      />
-      <button type="submit">Search</button>
-    </form>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search GitHub user..."
+        />
+        <button type="submit">Search</button>
+      </form>
+
+      {loading && <p>Loading...</p>}
+
+      {error && <p>{error}</p>}
+
+      {user && (
+        <div>
+          <img src={user.avatar_url} alt={user.login} width={100} />
+          <h3>{user.login}</h3>
+        </div>
+      )}
+    </div>
   );
 };
 
