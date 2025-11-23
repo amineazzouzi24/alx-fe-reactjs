@@ -1,6 +1,5 @@
-// src/components/Search.jsx
 import React, { useState } from 'react';
-import { fetchUsersAdvanced } from '../services/githubService';
+import { fetchUserData, fetchUsersAdvanced } from '../services/githubService';
 
 const Search = () => {
   const [username, setUsername] = useState('');
@@ -17,7 +16,15 @@ const Search = () => {
     setUserData([]);
 
     try {
-      const data = await fetchUsersAdvanced({ username, location, minRepos });
+      let data = [];
+      // إذا فقط اسم المستخدم -> البحث الأساسي
+      if (username && !location && !minRepos) {
+        const user = await fetchUserData(username);
+        data = [user]; // نجعلها array ليتوافق مع map
+      } else {
+        // البحث المتقدم
+        data = await fetchUsersAdvanced({ username, location, minRepos });
+      }
       setUserData(data);
     } catch (err) {
       setError(true);

@@ -1,7 +1,7 @@
 // src/services/githubService.js
 import axios from 'axios';
 
-// بحث مستخدم واحد (المطلوب في المهمة الأساسية)
+// دالة البحث الأساسي عن مستخدم واحد
 export const fetchUserData = async (username) => {
   try {
     const response = await axios.get(`https://api.github.com/users/${username}`);
@@ -11,7 +11,7 @@ export const fetchUserData = async (username) => {
   }
 };
 
-// بحث متقدم متعدد المستخدمين (Advanced Search)
+// دالة البحث المتقدم عن مستخدمين متعددين
 export const fetchUsersAdvanced = async ({ username, location, minRepos }) => {
   let query = '';
   if (username) query += username;
@@ -20,7 +20,7 @@ export const fetchUsersAdvanced = async ({ username, location, minRepos }) => {
 
   try {
     const response = await axios.get(`https://api.github.com/search/users?q=${query}`);
-    return response.data.items; // array of users
+    return response.data.items; // مصفوفة المستخدمين
   } catch (error) {
     throw error;
   }
