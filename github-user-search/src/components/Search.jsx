@@ -1,3 +1,4 @@
+// src/components/Search.jsx
 import React, { useState } from 'react';
 import { fetchUsersAdvanced } from '../services/githubService';
 
@@ -26,7 +27,7 @@ const Search = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-4">
+    <div className="max-w-4xl mx-auto p-4">
       <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-2 mb-4">
         <input
           type="text"
@@ -56,6 +57,8 @@ const Search = () => {
 
       {loading && <p>Loading...</p>}
       {error && <p>Looks like we cant find the user</p>}
+      {!loading && userData.length === 0 && <p>No users found</p>}
+
       {userData.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {userData.map(user => (
