@@ -1,51 +1,60 @@
-// src/components/Search.jsx
-import React, { useState } from "react";
-import { fetchUserData } from "../services/githubService";
+import React, { useState } from 'react';
+import { fetchUserData } from '../services/githubService';
 
 const Search = () => {
-  const [query, setQuery] = useState("");
-  const [user, setUser] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(""); // for "user not found"
+  const [error, setError] = useState(false);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // منع إعادة تحميل الصفحة
+    if (!searchTerm) return;
+
     setLoading(true);
-    setError("");
-    setUser(null);
+    setError(false);
+    setUserData(null);
 
     try {
-      const data = await fetchUserData(query);
-      setUser(data); // display user info
+      const data = await fetchUserData(searchTerm);
+      setUserData(data);
     } catch (err) {
-      setError("Looks like we can't find the user"); // display error
+      setError(true);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div>
+    <div style={{ maxWidth: '400px', margin: '0 auto', textAlign: 'center' }}>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search GitHub user..."
+          placeholder="Enter GitHub username"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          style={{ padding: '8px', width: '70%', marginRight: '5px' }}
         />
-        <button type="submit">Search</button>
+        <button type="submit" style={{ padding: '8px' }}>Search</button>
       </form>
 
-      {loading && <p>Loading...</p>}
-
-      {error && <p style={{ color: "red" }}>{error}</p>} {/* error message */}
-
-      {user && (
-        <div>
-          <img src={user.avatar_url} alt={user.login} width={100} />
-          <h3>{user.login}</h3>
-        </div>
-      )}
+      <div style={{ marginTop: '20px' }}>
+        {loading && <p>Loading...</p>}
+        {error && <p>Looks like we can't find the user</p>}
+        {userData && (
+          <div>
+            <img
+              src={userData.avatar_url}
+              alt={userData.name}
+              style={{ width: '100px', borderRadius: '50%' }}
+            />
+            <h3>{userData.name || userData.login}</h3>
+            <a href={userData.html_url} target="_blank" rel="noopener noreferrer">
+              View Profile
+            </a>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
