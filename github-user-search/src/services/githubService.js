@@ -1,7 +1,21 @@
-const GITHUB_TOKEN = import.meta.env.VITE_APP_GITHUB_API_KEY;
+export async function getGithubUser(username) {
+  const token = import.meta.env.VITE_GITHUB_TOKEN;
 
-export const axiosConfig = {
-  headers: {
-    Authorization: `Bearer ${GITHUB_TOKEN}`
+  try {
+    const response = await fetch(`https://api.github.com/users/${username}`, {
+      headers: {
+        Authorization: `token ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("User not found");
+    }
+
+    const data = await response.json();
+    return data;
+
+  } catch (error) {
+    throw error;
   }
-};
+}
