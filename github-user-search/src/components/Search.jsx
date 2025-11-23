@@ -8,7 +8,7 @@ const Search = () => {
   const [error, setError] = useState(false);
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // منع إعادة تحميل الصفحة
+    e.preventDefault();
     if (!searchTerm) return;
 
     setLoading(true);
@@ -40,7 +40,7 @@ const Search = () => {
 
       <div style={{ marginTop: '20px' }}>
         {loading && <p>Loading...</p>}
-        {error && <p>Looks like we can't find the user</p>}
+        {error && <p>Looks like we cant find the user</p>}
         {userData && (
           <div>
             <img
