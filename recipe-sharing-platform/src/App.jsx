@@ -14,3 +14,15 @@ function App() {
 }
 
 export default App;
+
+import AddRecipeForm from './components/AddRecipeForm';
+
+function App() {
+  return (
+    <div>
+      <AddRecipeForm />
+    </div>
+  );
+}
+
+export default App;
