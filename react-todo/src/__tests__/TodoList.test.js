@@ -11,38 +11,33 @@ describe('TodoList Component', () => {
     expect(screen.getByText('Write Todo App')).toBeInTheDocument();
   });
 
-  // هاد الـ test ما يقدرش يمشي إلا إذا كان AddTodoForm يحتوي على placeholder و form صحيح
-  // إذا ما عندكش AddTodoForm جاهز، خليه معلّق مؤقتاً أو احذفو
   test('adds a new todo', () => {
     render(<TodoList />);
-
-    // افترض إنو AddTodoForm عندو input بالـ placeholder هذا (أو غيري حسب الكود ديالك)
-    const input = screen.getByPlaceholderText(/add new todo/i); // أو /أضف مهمة/i إذا بالعربية
-    const addButton = screen.getByRole('button', { name: /add/i }); // أو getByText('Add')
+    const input = screen.getByPlaceholderText('Add new todo');
+    const form = screen.getByRole('form', { name: /Add todo form/i });
 
     fireEvent.change(input, { target: { value: 'New Todo' } });
-    fireEvent.click(addButton); // أو fireEvent.submit(screen.getByRole('form'))
+    fireEvent.submit(form);
 
     expect(screen.getByText('New Todo')).toBeInTheDocument();
   });
 
   test('toggles a todo', () => {
     render(<TodoList />);
-    const todoItem = screen.getByText('Learn React');
+    const todo = screen.getByText('Learn React');
+    
+    expect(todo).toHaveStyle('text-decoration: none');
 
-    // قبل الكليك: ما عندوش line-through
-    expect(todoItem).toHaveStyle('text-decoration: none');
+    fireEvent.click(todo);
+    expect(todo).toHaveStyle('text-decoration: line-through');
 
-    fireEvent.click(todoItem);
-    expect(todoItem).toHaveStyle('text-decoration: line-through');
-
-    fireEvent.click(todoItem);
-    expect(todoItem).toHaveStyle('text-decoration: none');
+    fireEvent.click(todo);
+    expect(todo).toHaveStyle('text-decoration: none');
   });
 
   test('deletes a todo', () => {
     render(<TodoList />);
-    const deleteButtons = screen.getAllByRole('button', { name: 'Delete' });
+    const deleteButtons = screen.getAllByText('Delete');
     
     fireEvent.click(deleteButtons[0]);
 
