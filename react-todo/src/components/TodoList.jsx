@@ -1,17 +1,15 @@
-import React, { useState } from "react";
-import AddTodoForm from "./AddTodoForm";
+// src/components/TodoList.jsx
+import React, { useState } from 'react';
+import AddTodoForm from './AddTodoForm';
 
-export const initialTodos = [
-  { id: 1, text: "Learn React", completed: false },
-  { id: 2, text: "Build a Todo App", completed: true },
-];
-
-const TodoList = () => {
-  const [todos, setTodos] = useState(initialTodos);
+function TodoList() {
+  const [todos, setTodos] = useState([
+    { id: 1, text: 'Learn React', completed: false },
+    { id: 2, text: 'Build a Todo App', completed: true },
+  ]);
 
   const addTodo = (text) => {
-    const newTodo = { id: Date.now(), text, completed: false };
-    setTodos([...todos, newTodo]);
+    setTodos([...todos, { id: Date.now(), text, completed: false }]);
   };
 
   const toggleTodo = (id) => {
@@ -29,24 +27,29 @@ const TodoList = () => {
   return (
     <div>
       <h1>Todo List</h1>
-      <AddTodoForm onAdd={addTodo} />
+
+      {/* Pass addTodo to AddTodoForm */}
+      <AddTodoForm addTodo={addTodo} />
+
       <ul>
         {todos.map((todo) => (
           <li
             key={todo.id}
             onClick={() => toggleTodo(todo.id)}
             style={{
-              textDecoration: todo.completed ? "line-through" : "none",
-              cursor: "pointer",
+              textDecoration: todo.completed ? 'line-through' : 'none',
+              cursor: 'pointer',
             }}
+            role="listitem"
           >
             {todo.text}
             <button
               onClick={(e) => {
-                e.stopPropagation();
+                e.stopPropagation(); // Prevent toggle on delete
                 deleteTodo(todo.id);
               }}
               style={{ marginLeft: '10px' }}
+              aria-label={`Delete ${todo.text}`} // ✅ improves accessibility & testing
             >
               Delete
             </button>
@@ -55,6 +58,6 @@ const TodoList = () => {
       </ul>
     </div>
   );
-};
+}
 
 export default TodoList;

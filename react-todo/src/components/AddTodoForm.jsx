@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 
-const AddTodoForm = ({ onAdd }) => {
+const AddTodoForm = ({ addTodo }) => {
   const [text, setText] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (text.trim()) {
-      onAdd(text);
+      addTodo(text); // ✅ FIXED (was onAdd)
       setText("");
     }
   };

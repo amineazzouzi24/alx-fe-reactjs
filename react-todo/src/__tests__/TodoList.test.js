@@ -1,3 +1,4 @@
+// src/__tests__/TodoList.test.js
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -15,10 +16,10 @@ describe('TodoList Component', () => {
     render(<TodoList />);
 
     const input = screen.getByPlaceholderText('Add new todo');
-    const addButton = screen.getByRole('button', { name: /add/i });
+    const button = screen.getByText('Add');
 
     fireEvent.change(input, { target: { value: 'New Todo' } });
-    fireEvent.click(addButton);
+    fireEvent.click(button);
 
     expect(screen.getByText('New Todo')).toBeInTheDocument();
   });
