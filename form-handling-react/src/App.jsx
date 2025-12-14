@@ -1,5 +1,5 @@
-import React from 'react';
-import FormikForm from './components/formikForm.jsx';
+import React from "react";
+import FormikForm from "./components/formikForm";  // التأكد من المسار الصحيح
 
 function App() {
   return (
