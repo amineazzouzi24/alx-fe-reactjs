@@ -14,13 +14,17 @@ const TodoList = () => {
     if (!text.trim()) return;
     setTodos([
       ...todos,
-      { id: Date.now(), text, completed: false },
+      {
+        id: Date.now(),
+        text,
+        completed: false,
+      },
     ]);
   };
 
   const toggleTodo = (id) => {
     setTodos(
-      todos.map(todo =>
+      todos.map((todo) =>
         todo.id === id
           ? { ...todo, completed: !todo.completed }
           : todo
@@ -29,7 +33,7 @@ const TodoList = () => {
   };
 
   const deleteTodo = (id) => {
-    setTodos(todos.filter(todo => todo.id !== id));
+    setTodos(todos.filter((todo) => todo.id !== id));
   };
 
   return (
@@ -39,14 +43,14 @@ const TodoList = () => {
       <AddTodoForm onAdd={addTodo} />
 
       <ul>
-        {todos.map(todo => (
+        {todos.map((todo) => (
           <li
             key={todo.id}
             data-testid="todo-item"
             onClick={() => toggleTodo(todo.id)}
             style={{
               cursor: 'pointer',
-              textDecoration: todo.completed ? 'line-through' : 'none'
+              textDecoration: todo.completed ? 'line-through' : 'none',
             }}
           >
             {todo.text}
