@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 const RegistrationForm = () => {
-  // State management using useState
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -10,7 +9,7 @@ const RegistrationForm = () => {
 
   const [errors, setErrors] = useState({});
 
-  // Handling input field changes
+  // Handle changes in input fields
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -19,7 +18,7 @@ const RegistrationForm = () => {
     });
   };
 
-  // Form validation logic
+  // Form validation function
   const validateForm = () => {
     const errors = {};
     if (!formData.username) errors.username = "Username is required";
@@ -28,12 +27,11 @@ const RegistrationForm = () => {
     return errors;
   };
 
-  // Handling form submission
+  // Handle form submission
   const handleSubmit = (e) => {
-    e.preventDefault();  // Prevent default form submission behavior
+    e.preventDefault();
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length === 0) {
-      // Here you can send data to an API (for now, we are logging it to the console)
       console.log("Form submitted successfully", formData);
     } else {
       setErrors(validationErrors);
