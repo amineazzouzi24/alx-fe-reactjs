@@ -1,13 +1,11 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-const RegistrationForm = () => {
+function RegistrationForm() {
   const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
+    username: '',
+    email: '',
+    password: '',
   });
-
-  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setFormData({
@@ -18,14 +16,11 @@ const RegistrationForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (!formData.username || !formData.email || !formData.password) {
-      setError("All fields are required");
+      alert('All fields are required');
       return;
     }
-
-    setError("");
-    console.log("Form submitted:", formData);
+    console.log(formData);
   };
 
   return (
@@ -36,27 +31,22 @@ const RegistrationForm = () => {
         value={formData.username}
         onChange={handleChange}
       />
-
       <input
         name="email"
         placeholder="Email"
         value={formData.email}
         onChange={handleChange}
       />
-
       <input
-        type="password"
         name="password"
+        type="password"
         placeholder="Password"
         value={formData.password}
         onChange={handleChange}
       />
-
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
       <button type="submit">Register</button>
     </form>
   );
-};
+}
 
 export default RegistrationForm;
