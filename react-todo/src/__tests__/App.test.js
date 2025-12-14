@@ -1,3 +1,4 @@
+// src/__tests__/App.test.js
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -7,7 +8,7 @@ describe('App Component', () => {
   test('renders App component with TodoList', () => {
     render(<App />);
 
-    // There are multiple "Todo List" headings (App + TodoList)
+    // Use getAllByRole because the page may contain multiple headings with the same text
     const headings = screen.getAllByRole('heading', { name: /todo list/i });
     expect(headings.length).toBeGreaterThan(0);
 
