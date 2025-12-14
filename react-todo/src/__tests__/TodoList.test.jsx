@@ -24,11 +24,11 @@ describe('TodoList Component', () => {
 
   test('toggles todo completion', async () => {
     render(<TodoList />);
-    const todo = screen.getByText('Learn React');
+    const todoItem = screen.getByText('Learn React').closest('li');
 
-    await userEvent.click(todo);
+    await userEvent.click(screen.getByText('Learn React'));
 
-    expect(todo).toHaveStyle('text-decoration: line-through');
+    expect(todoItem).toHaveStyle('text-decoration: line-through');
   });
 
   test('deletes a todo', () => {
