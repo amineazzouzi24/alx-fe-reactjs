@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
+import { act } from 'react';
 import TodoList from '../components/TodoList';
 
 describe('TodoList Component', () => {
@@ -26,7 +27,9 @@ describe('TodoList Component', () => {
     render(<TodoList />);
     const todoItem = screen.getByText('Learn React').closest('li');
 
-    await userEvent.click(screen.getByText('Learn React'));
+    await act(async () => {
+      await userEvent.click(screen.getByText('Learn React'));
+    });
 
     expect(todoItem).toHaveStyle('text-decoration: line-through');
   });
