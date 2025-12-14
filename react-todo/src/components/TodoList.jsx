@@ -1,59 +1,43 @@
+// src/components/TodoList.js
 import React, { useState } from 'react';
 import AddTodoForm from './AddTodoForm';
 
-function TodoList() {
+const TodoList = () => {
   const [todos, setTodos] = useState([
-    { text: 'Learn React', completed: false },
-    { text: 'Write Todo App', completed: false },
+    { id: 1, text: 'Learn React', completed: false },
+    { id: 2, text: 'Write Todo App', completed: false },
   ]);
 
-  // Add a new todo
   const addTodo = (text) => {
-    if (!text.trim()) return;
-    setTodos([...todos, { text, completed: false }]);
+    if (text.trim() === '') return;
+    setTodos([...todos, { id: Date.now(), text, completed: false }]);
   };
 
-  // Toggle todo completion
-  const toggleTodo = (index) => {
-    const newTodos = [...todos];
-    newTodos[index].completed = !newTodos[index].completed;
-    setTodos(newTodos);
+  const toggleTodo = (id) => {
+    setTodos(todos.map(todo => (todo.id === id ? { ...todo, completed: !todo.completed } : todo)));
   };
 
-  // Delete a todo
-  const deleteTodo = (index) => {
-    const newTodos = todos.filter((_, i) => i !== index);
-    setTodos(newTodos);
+  const deleteTodo = (id) => {
+    setTodos(todos.filter(todo => todo.id !== id));
   };
 
   return (
     <div>
       <AddTodoForm addTodo={addTodo} />
       <ul>
-        {todos.map((todo, index) => (
+        {todos.map(todo => (
           <li
-            key={index}
-            onClick={() => toggleTodo(index)}
-            style={{
-              textDecoration: todo.completed ? 'line-through' : 'none',
-              cursor: 'pointer',
-            }}
+            key={todo.id}
+            onClick={() => toggleTodo(todo.id)}
+            style={{ textDecoration: todo.completed ? 'line-through' : 'none', cursor: 'pointer' }}
           >
             {todo.text}
-            <button
-              onClick={(e) => {
-                e.stopPropagation(); // Prevent toggling when deleting
-                deleteTodo(index);
-              }}
-              style={{ marginLeft: '10px' }}
-            >
-              Delete
-            </button>
+            <button onClick={(e) => { e.stopPropagation(); deleteTodo(todo.id); }} style={{ marginLeft: '10px' }}>Delete</button>
           </li>
         ))}
       </ul>
     </div>
   );
-}
+};
 
 export default TodoList;

@@ -14,7 +14,7 @@ describe('TodoList Component', () => {
   test('adds a new todo', () => {
     render(<TodoList />);
     const input = screen.getByPlaceholderText('Add new todo');
-    const form = screen.getByRole('form');
+    const form = screen.getByRole('form', { name: /Add todo form/i });
 
     fireEvent.change(input, { target: { value: 'New Todo' } });
     fireEvent.submit(form);

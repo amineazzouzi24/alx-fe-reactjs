@@ -1,27 +1,26 @@
+// src/components/AddTodoForm.js
 import React, { useState } from 'react';
 
-function AddTodoForm({ addTodo }) {
-  const [input, setInput] = useState('');
+const AddTodoForm = ({ addTodo }) => {
+  const [newTodo, setNewTodo] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Prevent adding empty todos
-    if (input.trim() === '') return;
-    addTodo(input);
-    setInput(''); // Clear input after adding
+    addTodo(newTodo);
+    setNewTodo('');
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} aria-label="Add todo form">
       <input
         type="text"
+        value={newTodo}
+        onChange={(e) => setNewTodo(e.target.value)}
         placeholder="Add new todo"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
       />
       <button type="submit">Add</button>
     </form>
   );
-}
+};
 
 export default AddTodoForm;
