@@ -4,19 +4,28 @@ const RegistrationForm = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!username || !email || !password) {
-      setError("All fields are required");
+    if (!username) {
+      setErrors("Username is required");
       return;
     }
 
-    setError("");
+    if (!email) {
+      setErrors("Email is required");
+      return;
+    }
 
-    // Mock API request
+    if (!password) {
+      setErrors("Password is required");
+      return;
+    }
+
+    setErrors("");
+
     try {
       const response = await fetch(
         "https://jsonplaceholder.typicode.com/posts",
@@ -30,8 +39,8 @@ const RegistrationForm = () => {
       const data = await response.json();
       console.log("User Registered:", data);
       alert("Registration successful!");
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -39,7 +48,7 @@ const RegistrationForm = () => {
     <form onSubmit={handleSubmit}>
       <h2>Register (Controlled)</h2>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {errors && <p style={{ color: "red" }}>{errors}</p>}
 
       <input
         type="text"
