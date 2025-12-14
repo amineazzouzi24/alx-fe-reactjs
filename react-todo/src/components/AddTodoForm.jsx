@@ -1,4 +1,3 @@
-// src/components/AddTodoForm.js
 import React, { useState } from 'react';
 
 const AddTodoForm = ({ addTodo }) => {
@@ -6,7 +5,8 @@ const AddTodoForm = ({ addTodo }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addTodo(newTodo);
+    if (newTodo.trim() === '') return;
+    addTodo(newTodo.trim());
     setNewTodo('');
   };
 
