@@ -1,18 +1,18 @@
-import { useState } from 'react';
+// src/components/TodoList.js
+import React, { useState } from 'react';
 
-function TodoList() {
+export default function TodoList() {
   const [todos, setTodos] = useState([
     { id: 1, text: 'Learn React', completed: false },
-    { id: 2, text: 'Write Todo App', completed: false },
+    { id: 2, text: 'Build a Todo App', completed: false },
   ]);
-  const [input, setInput] = useState('');
+  const [newTodo, setNewTodo] = useState('');
 
   const addTodo = (e) => {
     e.preventDefault();
-    if (!input.trim()) return;
-    const newTodo = { id: Date.now(), text: input, completed: false };
-    setTodos([...todos, newTodo]);
-    setInput('');
+    if (!newTodo.trim()) return;
+    setTodos([...todos, { id: Date.now(), text: newTodo, completed: false }]);
+    setNewTodo('');
   };
 
   const toggleTodo = (id) => {
@@ -29,13 +29,13 @@ function TodoList() {
 
   return (
     <div>
-      <h2>Todo List</h2>
+      <h1>Todo List</h1>
       <form onSubmit={addTodo}>
         <input
           type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Add new todo"
+          value={newTodo}
+          onChange={(e) => setNewTodo(e.target.value)}
+          placeholder="Add a new todo"
         />
         <button type="submit">Add</button>
       </form>
@@ -43,13 +43,9 @@ function TodoList() {
         {todos.map((todo) => (
           <li
             key={todo.id}
-            onClick={() => toggleTodo(todo.id)}
-            style={{
-              textDecoration: todo.completed ? 'line-through' : 'none',
-              cursor: 'pointer',
-            }}
+            style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}
           >
-            {todo.text}
+            <span onClick={() => toggleTodo(todo.id)}>{todo.text}</span>
             <button onClick={() => deleteTodo(todo.id)}>Delete</button>
           </li>
         ))}
@@ -57,5 +53,3 @@ function TodoList() {
     </div>
   );
 }
-
-export default TodoList;

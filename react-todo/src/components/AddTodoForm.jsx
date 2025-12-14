@@ -1,12 +1,12 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
-const AddTodoForm = ({ addTodo }) => {
+const AddTodoForm = ({ onAdd }) => {
   const [text, setText] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!text.trim()) return;
-    addTodo(text);
+    onAdd(text);
     setText("");
   };
 
