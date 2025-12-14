@@ -5,9 +5,10 @@ function AddTodoForm({ addTodo }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Prevent adding empty todos
     if (input.trim() === '') return;
     addTodo(input);
-    setInput('');
+    setInput(''); // Clear input after adding
   };
 
   return (
