@@ -16,7 +16,7 @@ const RegistrationForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!formData.username || !formData.email || !formData.password) {
@@ -25,12 +25,31 @@ const RegistrationForm = () => {
     }
 
     setError("");
-    console.log("Form submitted:", formData);
+
+    // Mock API request
+    try {
+      const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const data = await response.json();
+      console.log("User Registered:", data);
+      alert("Registration successful!");
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      <h2>Register (Controlled)</h2>
+
+      {error && <p style={{ color: "red" }}>{error}</p>}
+
       <input
+        type="text"
         name="username"
         placeholder="Username"
         value={formData.username}
@@ -38,6 +57,7 @@ const RegistrationForm = () => {
       />
 
       <input
+        type="email"
         name="email"
         placeholder="Email"
         value={formData.email}
@@ -51,8 +71,6 @@ const RegistrationForm = () => {
         value={formData.password}
         onChange={handleChange}
       />
-
-      {error && <p style={{ color: "red" }}>{error}</p>}
 
       <button type="submit">Register</button>
     </form>

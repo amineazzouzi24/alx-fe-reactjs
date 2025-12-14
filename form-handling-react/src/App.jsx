@@ -1,13 +1,14 @@
-import React from "react";
-import { createRoot } from "react-dom/client";
-import App from "./App.jsx";  // تأكد من المسار الصحيح
-import "./index.css";
+import RegistrationForm from "./components/RegistrationForm";
+import FormikForm from "./components/formikForm";
 
-const rootElement = document.getElementById("root");
-const root = createRoot(rootElement);
+function App() {
+  return (
+    <>
+      <RegistrationForm />
+      <hr />
+      <FormikForm />
+    </>
+  );
+}
 
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+export default App;
