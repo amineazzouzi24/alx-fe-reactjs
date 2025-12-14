@@ -1,59 +1,39 @@
-import { useState } from 'react';
-import React from 'react';
-
+import React, { useState } from 'react';
+import AddTodoForm from './AddTodoForm';
 
 function TodoList() {
   const [todos, setTodos] = useState([
-    { id: 1, text: 'Learn React', completed: false },
-    { id: 2, text: 'Write Todo App', completed: false }
+    { text: 'Learn React', completed: false },
+    { text: 'Write Todo App', completed: false }
   ]);
-  const [input, setInput] = useState('');
 
-  const addTodo = (e) => {
-    e.preventDefault();
-    if (!input.trim()) return;
-    const newTodo = { id: Date.now(), text: input, completed: false };
-    setTodos([...todos, newTodo]);
-    setInput('');
+  const addTodo = (text) => {
+    setTodos([...todos, { text, completed: false }]);
   };
 
-  const toggleTodo = (id) => {
-    setTodos(
-      todos.map(todo =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      )
-    );
+  const toggleTodo = (index) => {
+    const newTodos = [...todos];
+    newTodos[index].completed = !newTodos[index].completed;
+    setTodos(newTodos);
   };
 
-  const deleteTodo = (id, e) => {
-    e.stopPropagation();
-    setTodos(todos.filter(todo => todo.id !== id));
+  const deleteTodo = (index) => {
+    const newTodos = todos.filter((_, i) => i !== index);
+    setTodos(newTodos);
   };
 
   return (
     <div>
-      <h2>Todo List</h2>
-      <form onSubmit={addTodo}>
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Add new todo"
-        />
-        <button type="submit">Add</button>
-      </form>
+      <AddTodoForm addTodo={addTodo} />
       <ul>
-        {todos.map(todo => (
+        {todos.map((todo, index) => (
           <li
-            key={todo.id}
-            onClick={() => toggleTodo(todo.id)}
-            style={{
-              textDecoration: todo.completed ? 'line-through' : 'none',
-              cursor: 'pointer'
-            }}
+            key={index}
+            onClick={() => toggleTodo(index)}
+            style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}
           >
             {todo.text}
-            <button onClick={(e) => deleteTodo(todo.id, e)}>Delete</button>
+            <button onClick={(e) => { e.stopPropagation(); deleteTodo(index); }}>Delete</button>
           </li>
         ))}
       </ul>
