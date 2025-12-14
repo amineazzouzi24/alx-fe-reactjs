@@ -6,24 +6,28 @@ import TodoList from '../components/TodoList';
 describe('TodoList Component', () => {
   test('renders initial todos', () => {
     render(<TodoList />);
+
     expect(screen.getByText('Learn React')).toBeInTheDocument();
-    expect(screen.getByText('Write Todo App')).toBeInTheDocument();
+    expect(screen.getByText('Build a Todo App')).toBeInTheDocument();
   });
 
   test('adds a new todo', () => {
     render(<TodoList />);
+
     const input = screen.getByPlaceholderText('Add new todo');
-    const form = screen.getByRole('form', { name: /Add todo form/i });
+    const addButton = screen.getByRole('button', { name: /add/i });
 
     fireEvent.change(input, { target: { value: 'New Todo' } });
-    fireEvent.submit(form);
+    fireEvent.click(addButton);
 
     expect(screen.getByText('New Todo')).toBeInTheDocument();
   });
 
   test('toggles a todo', () => {
     render(<TodoList />);
+
     const todo = screen.getByText('Learn React');
+
     expect(todo).toHaveStyle('text-decoration: none');
 
     fireEvent.click(todo);
@@ -35,10 +39,11 @@ describe('TodoList Component', () => {
 
   test('deletes a todo', () => {
     render(<TodoList />);
+
     const deleteButtons = screen.getAllByText('Delete');
     fireEvent.click(deleteButtons[0]);
 
     expect(screen.queryByText('Learn React')).not.toBeInTheDocument();
-    expect(screen.getByText('Write Todo App')).toBeInTheDocument();
+    expect(screen.getByText('Build a Todo App')).toBeInTheDocument();
   });
 });

@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-const AddTodoForm = ({ addTodo }) => {
-  const [newTodo, setNewTodo] = useState('');
+const AddTodoForm = ({ onAdd }) => {
+  const [text, setText] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (newTodo.trim() === '') return;
-    addTodo(newTodo.trim());
-    setNewTodo('');
+    if (text.trim()) {
+      onAdd(text);
+      setText("");
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} aria-label="Add todo form">
+    <form onSubmit={handleSubmit}>
       <input
-        type="text"
-        value={newTodo}
-        onChange={(e) => setNewTodo(e.target.value)}
         placeholder="Add new todo"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
       />
       <button type="submit">Add</button>
     </form>
