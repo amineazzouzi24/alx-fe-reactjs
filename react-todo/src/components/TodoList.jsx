@@ -20,12 +20,7 @@ const TodoList = () => {
   };
 
   const addTodo = (text) => {
-    const newTodo = {
-      id: Date.now(),
-      text,
-      completed: false,
-    };
-    setTodos([...todos, newTodo]);
+    setTodos([...todos, { id: Date.now(), text, completed: false }]);
   };
 
   return (
