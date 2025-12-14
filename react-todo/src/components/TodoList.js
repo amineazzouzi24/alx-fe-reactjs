@@ -24,7 +24,8 @@ function TodoList() {
     );
   };
 
-  const deleteTodo = (id) => {
+  const deleteTodo = (id, e) => {
+    e.stopPropagation(); // Prevent toggling when deleting
     setTodos(todos.filter(todo => todo.id !== id));
   };
 
@@ -51,7 +52,7 @@ function TodoList() {
             }}
           >
             {todo.text}
-            <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+            <button onClick={(e) => deleteTodo(todo.id, e)}>Delete</button>
           </li>
         ))}
       </ul>
