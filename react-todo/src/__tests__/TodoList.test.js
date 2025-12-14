@@ -1,4 +1,3 @@
-// src/__tests__/TodoList.test.js
 import { render, screen, fireEvent } from '@testing-library/react';
 import TodoList from '../TodoList';
 
@@ -34,3 +33,4 @@ describe('TodoList Component', () => {
     expect(screen.queryByText('Learn React')).toBeNull();
   });
 });
+export default TodoList;

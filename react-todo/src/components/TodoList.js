@@ -1,4 +1,3 @@
-// src/TodoList.jsx
 import { useState } from 'react';
 
 function TodoList() {
@@ -25,7 +24,7 @@ function TodoList() {
   };
 
   const deleteTodo = (id, e) => {
-    e.stopPropagation(); // Prevent toggling when deleting
+    e.stopPropagation();
     setTodos(todos.filter(todo => todo.id !== id));
   };
 
