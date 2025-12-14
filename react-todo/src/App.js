@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import TodoList from './components/TodoList';
-
+import React from 'react';
+import TodoList from './components/TodoList'; // ✅ correct
 
 function App() {
   return (
-    <div>
-      <h1>My Todo App</h1>
+    <div className="App">
+      <h1>My React Todo App</h1>
       <TodoList />
     </div>
   );
