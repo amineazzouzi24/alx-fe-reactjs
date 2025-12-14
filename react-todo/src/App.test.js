@@ -8,7 +8,7 @@ describe('App Component', () => {
   test('renders main heading and TodoList component', () => {
     render(<App />);
     
-    expect(screen.getByRole('heading', { name: /My Todo App/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Todo List/i })).toBeInTheDocument();
     expect(screen.getByText('Learn React')).toBeInTheDocument();
     expect(screen.getByText('Write Todo App')).toBeInTheDocument();
   });

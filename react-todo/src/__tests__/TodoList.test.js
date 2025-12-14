@@ -14,10 +14,10 @@ describe('TodoList Component', () => {
   test('adds a new todo', () => {
     render(<TodoList />);
     const input = screen.getByPlaceholderText('Add new todo');
-    const addButton = screen.getByText('Add');
+    const form = screen.getByRole('form');
 
     fireEvent.change(input, { target: { value: 'New Todo' } });
-    fireEvent.click(addButton);
+    fireEvent.submit(form);
 
     expect(screen.getByText('New Todo')).toBeInTheDocument();
   });
@@ -39,7 +39,7 @@ describe('TodoList Component', () => {
     const deleteButtons = screen.getAllByText('Delete');
     fireEvent.click(deleteButtons[0]);
 
-    expect(screen.queryByText('Learn React')).toBeNull();
+    expect(screen.queryByText('Learn React')).not.toBeInTheDocument();
     expect(screen.getByText('Write Todo App')).toBeInTheDocument();
   });
 });
